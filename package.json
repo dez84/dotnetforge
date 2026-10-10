@@ -13,7 +13,8 @@
     "db:reset": "docker compose down -v && docker compose up -d",
     "dev:backend": "npm --workspace backend run dev",
     "dev:frontend": "npm --workspace frontend run dev",
-    "build": "npm --workspace backend run build && npm --workspace frontend run build"
+    "build": "npm --workspace backend run build && npm --workspace frontend run build",
+    "test": "npm --workspace backend test"
   },
   "engines": {
     "node": ">=20"

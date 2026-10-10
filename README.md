@@ -97,6 +97,7 @@ password: forge1234
 npm run db:down     # stop the database (keeps data)
 npm run db:reset    # wipe the volume and re-seed from scratch
 npm run build       # production build for both workspaces
+npm test            # backend integration tests (needs the DB running)
 ```
 
 If the database volume already exists from an older seed, run `npm run db:reset`
@@ -175,7 +176,22 @@ Progress through each step is saved to your account and restored on any device.
 
 ---
 
-## 10. Roadmap / notes
+## 10. Testing & CI
+
+`backend/test/api.test.js` spins up the real Express app against a live
+PostgreSQL database (no mocks) and exercises content, quiz grading, auth,
+progress, capstone steps, and error shapes.
+
+```bash
+npm run db:up     # tests need a live, seeded database
+npm test
+```
+
+CI (`.github/workflows/ci.yml`) runs on every push and pull request: it starts
+PostgreSQL 16, loads `schema.sql` + `seed.sql`, runs the backend suite, and
+builds the frontend.
+
+## 11. Roadmap / notes
 
 * The **"Explain & Refactor"** assistant currently runs a deterministic,
   dependency-free rule engine so it works offline. It is isolated behind

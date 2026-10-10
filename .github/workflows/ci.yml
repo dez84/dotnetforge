@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: Build & test
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: dotnetforge
+          POSTGRES_PASSWORD: dotnetforge
+          POSTGRES_DB: dotnetforge
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U dotnetforge -d dotnetforge"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgres://dotnetforge:dotnetforge@localhost:5432/dotnetforge
+      JWT_SECRET: ci-only-secret
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Load schema and seed
+        run: |
+          PGPASSWORD=dotnetforge psql -h localhost -U dotnetforge -d dotnetforge -f database/schema.sql
+          PGPASSWORD=dotnetforge psql -h localhost -U dotnetforge -d dotnetforge -f database/seed.sql
+
+      - name: Run backend tests
+        run: npm test
+
+      - name: Build frontend
+        run: npm run build
