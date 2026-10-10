@@ -16,6 +16,8 @@ COPY frontend ./frontend
 # Baked into the Next rewrite at build time — points the /api proxy at the API.
 ARG API_PROXY_TARGET=http://backend:4000
 ENV API_PROXY_TARGET=$API_PROXY_TARGET
+# Container builds need the self-contained server bundle.
+ENV BUILD_STANDALONE=1
 RUN npm --workspace frontend run build
 
 # --- runtime stage -----------------------------------------------------------

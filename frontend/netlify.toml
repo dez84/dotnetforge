@@ -1,0 +1,14 @@
+# Netlify config for the DotNetForge web app.
+# Deploy: Netlify -> Add new site -> Import from GitHub -> set Base directory
+# to "frontend" (this file is picked up automatically).
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# The /api/* rewrite (see next.config.mjs) proxies to the API host. Set
+# API_PROXY_TARGET in Netlify (Site settings -> Environment variables) to your
+# API base URL, e.g. https://dotnetforge-api.onrender.com

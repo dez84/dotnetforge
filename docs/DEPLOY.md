@@ -68,10 +68,12 @@ Note the API URL, e.g. `https://dotnetforge-api.onrender.com`.
 > Free Render Postgres expires after ~30 days — fine for testing, use a paid
 > instance (or external Postgres such as Neon/Supabase) for anything long-lived.
 
-### 2. Web on Vercel
+### 2. Web on Vercel (or Netlify)
 
 The Next.js rewrite already proxies `/api/*` to whatever `API_PROXY_TARGET`
 points at — no extra config needed.
+
+**Vercel**
 
 ```bash
 npm i -g vercel
@@ -82,12 +84,28 @@ vercel env add API_PROXY_TARGET production   # value: https://dotnetforge-api.on
 vercel --prod
 ```
 
+**Netlify** (frontend only — see the note below)
+
+1. Netlify → **Add new site → Import an existing project** → pick the repo.
+2. **Base directory:** `frontend` (its `netlify.toml` is picked up automatically).
+3. **Environment variable:** `API_PROXY_TARGET = https://<your-api-host>`.
+4. Deploy.
+
+Netlify runs the Next.js app through its OpenNext adapter, which needs to fetch
+a platform build plugin at build time. If the build fails with an optional-deps
+or "cannot find module" error, your lockfile was generated with
+`npm ci --omit=optional`; regenerate it with `npm install` and redeploy. The
+adapter also needs the standalone bundle to be **off** — this repo already
+handles that (`output: 'standalone'` applies to Docker builds only).
+
 Important: set `API_PROXY_TARGET` **before** deploying, because the rewrite is
-baked in at build time. Project settings for reference:
+baked in at build time.
+
+Project settings for reference:
 
 | Setting | Value |
 | --- | --- |
-| Root Directory | `frontend` |
+| Root / Base Directory | `frontend` |
 | Framework Preset | Next.js |
 | Build Command | `npm run build` |
 | Install Command | `npm install` |
