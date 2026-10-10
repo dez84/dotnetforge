@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET = process.env.JWT_SECRET || 'dev-only-insecure-secret-change-me';
+// Read lazily so tests (and late-loaded .env files) can set JWT_SECRET first.
+const getSecret = () => process.env.JWT_SECRET || 'dev-only-insecure-secret-change-me';
 
 export function signToken(user) {
   return jwt.sign(
     { sub: user.id, email: user.email, name: user.display_name },
-    SECRET,
+    getSecret(),
     { expiresIn: '7d' }
   );
 }
@@ -16,7 +17,7 @@ export function attachUser(req, _res, next) {
   const [scheme, token] = header.split(' ');
   if (scheme === 'Bearer' && token) {
     try {
-      const payload = jwt.verify(token, SECRET);
+      const payload = jwt.verify(token, getSecret());
       req.user = { id: payload.sub, email: payload.email, name: payload.name };
     } catch {
       /* invalid/expired token — treated as anonymous */
