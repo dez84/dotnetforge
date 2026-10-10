@@ -9,7 +9,7 @@ BEGIN;
 -- ---------------------------------------------------------------------------
 INSERT INTO users (email, display_name, password_hash)
 VALUES ('demo@dotnetforge.dev', 'Demo Engineer',
-        '$2b$10$Q9YIpq0P0k1h3xEz6R2cO.ofGm0lS8vVQ0Mxq0XK7YbJ2hH1o1lLu')
+        '$2a$10$2m9fVwt8767C.EqkAqqVp.wtugQ07RDI./Tgiq9V.mivbLLqjMsoi')
 ON CONFLICT (email) DO NOTHING;
 
 -- ---------------------------------------------------------------------------
