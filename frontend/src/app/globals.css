@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: theme('colors.forge.bg');
+  color: theme('colors.forge.text');
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-forge-border bg-forge-panel;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-touch
+           text-sm font-semibold transition active:scale-[.98];
+  }
+
+  /* 48x48 minimum touch target for mobile (Galaxy S24/S25 Ultra). */
+  .btn-primary {
+    @apply btn bg-forge-brand text-white hover:bg-indigo-500;
+  }
+
+  .btn-ghost {
+    @apply btn border border-forge-border text-forge-text hover:bg-forge-panel2;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-forge-border
+           bg-forge-panel2 px-3 py-1 text-xs font-medium text-forge-muted;
+  }
+
+  .terminal {
+    @apply rounded-xl border border-forge-border bg-[#05070d] p-4 font-mono
+           text-[13px] leading-relaxed overflow-x-auto;
+  }
+}
+
+/* Syntax highlighting tokens (see lib/highlight.js). */
+.tok-keyword {
+  color: #c792ea;
+}
+.tok-builtin {
+  color: #82aaff;
+}
+.tok-string {
+  color: #c3e88d;
+}
+.tok-number {
+  color: #f78c6c;
+}
+.tok-comment {
+  color: #5c6b8a;
+  font-style: italic;
+}
+
+/* Slim, dark scrollbars for code surfaces. */
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b3652;
+  border-radius: 8px;
+}

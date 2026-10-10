@@ -1,0 +1,20 @@
+{
+  "name": "DotNetForge — Learn Modern C# & .NET",
+  "short_name": "DotNetForge",
+  "description": "Interactive micro-learning for C# 12/13, ASP.NET Core, EF Core, Blazor, and guided capstone projects.",
+  "start_url": "/dashboard",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0b0f1a",
+  "theme_color": "#0b0f1a",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Dashboard", "url": "/dashboard" },
+    { "name": "Capstone Lab", "url": "/capstones" }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "dotnetforge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "DotNetForge — interactive micro-learning PWA for modern C# & .NET engineering",
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v && docker compose up -d",
+    "dev:backend": "npm --workspace backend run dev",
+    "dev:frontend": "npm --workspace frontend run dev",
+    "build": "npm --workspace backend run build && npm --workspace frontend run build"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
