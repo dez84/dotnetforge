@@ -1,0 +1,31 @@
+# Render blueprint for the DotNetForge API + database.
+#   1. Push this repo to GitHub.
+#   2. Render dashboard -> New -> Blueprint -> select the repo.
+#   3. Set JWT_SECRET (Render can auto-generate it).
+# The web frontend is deployed separately on Vercel (see docs/DEPLOY.md).
+
+databases:
+  - name: dotnetforge-db
+    databaseName: dotnetforge
+    user: dotnetforge
+    plan: free
+
+services:
+  - type: web
+    name: dotnetforge-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: dotnetforge-db
+          property: connectionString

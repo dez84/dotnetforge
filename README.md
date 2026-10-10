@@ -191,7 +191,25 @@ CI (`.github/workflows/ci.yml`) runs on every push and pull request: it starts
 PostgreSQL 16, loads `schema.sql` + `seed.sql`, runs the backend suite, and
 builds the frontend.
 
-## 11. Roadmap / notes
+## 11. Deployment
+
+Ready-to-use production setups are included:
+
+- **`docker-compose.prod.yml`** — full stack (Postgres + API + web) on one host.
+- **`backend/Dockerfile`**, **`frontend/Dockerfile`** — non-root, health-checked images.
+- **`render.yaml`** — Render blueprint for the API + database.
+- **`docs/DEPLOY.md`** — step-by-step guide for a VPS, Vercel/Netlify + Render, or any container host.
+
+Quick start on a Docker host:
+
+```bash
+POSTGRES_PASSWORD=$(openssl rand -hex 24) JWT_SECRET=$(openssl rand -hex 32) \
+  docker compose -f docker-compose.prod.yml up -d --build
+```
+
+Production drops the seeded demo account via `database/init/03-prod-hardening.sql`.
+
+## 12. Roadmap / notes
 
 * The **"Explain & Refactor"** assistant currently runs a deterministic,
   dependency-free rule engine so it works offline. It is isolated behind
