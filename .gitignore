@@ -5,6 +5,9 @@ node_modules/
 frontend/.next/
 frontend/out/
 
+# Netlify
+.netlify/
+
 # Env / secrets
 .env
 .env.*
